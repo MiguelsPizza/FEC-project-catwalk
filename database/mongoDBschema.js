@@ -1,44 +1,69 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const ProductSchema = new Schema({//maybe add keyword new
+const ProductSchema = new Schema({
+  //maybe add keyword new
   // _idDB: {
   //   type: Schema.Types.ObjectId,
   //   required: true
   // },
   id: {
     type: Number,
-    required: true
+    required: true,
   },
   name: {
     type: String,
-    required: true
+    required: true,
   },
   slogan: {
     type: String,
-    required: true
+    required: true,
   },
   description: {
     type: String,
-    required: true
+    required: true,
   },
   category: {
     type: String,
-    required: true
+    required: true,
   },
   default_price: {
     type: String,
-    required: true
+    required: true,
   },
-  features: [{
-    feature: {
-      type: String,
-      required: true
+});
+
+const Product = mongoose.model("Product", ProductSchema);
+
+const FeaturesSchema = new Schema(
+  {
+    _id: {
+      type: Number,
+      required: true,
     },
-    value: {
-      type: String,
-      required: true
-    }
-  }],
+    product_id: {
+      type: Number,
+      required: true,
+    },
+    features: {
+      feature: {
+        type: String,
+        required: true,
+      },
+      value: {
+        type: String,
+        required: true,
+      },
+    },
+  },
+  { collection: "groupFeatures" }
+);
+const groupFeatures = mongoose.model("groupFeatures", FeaturesSchema);
+
+const StylesSchema = new Schema({
+  _id: {
+    type: Number,
+    required: true,
+  },
   results: [{
     style_id: {
       type: Number,
@@ -56,36 +81,97 @@ const ProductSchema = new Schema({//maybe add keyword new
       type: String,
       required: true
     },
-    default: {
+    default_style: {
       type: Boolean,
       required: true
     },
     photos: {
-      thumbnail_url: {
-        type: String,
-        required: true
+      _id: {
+        type: Number,
+
       },
-      url: {
-        type: String,
-        required: true
-      }
+      product_id: {
+        type: Number,
+
+      },
+      related: [{
+        thumbnail_url: {
+          type: String,
+
+        },
+        url: {
+          type: String,
+
+        }
+      }]
+
     },
-    skus: {
-      size: {
+    skus: [{
+      id: {
+        type: Number,
+
+      },
+
         quantity: {
           type: Number,
-          required: true
+
         },
         size: {
           type: String,
-          required: true
+
         }
-      }
-    }
+
+    }]
   }]
-});
+},
+  { collection: "Combined_Styles" }
+);
 
-const Product = mongoose.model('Product', ProductSchema);
+const groupedStyles = mongoose.model("Combined_Styles", StylesSchema, "Combined_Styles");
 
 
-module.exports = Product
+
+// const SkusSchema = new Schema(
+//   {
+//     _id: {
+//       type: Number,
+//
+//     },
+//     related: [{
+//     size: {
+//       type: Number,
+//       required: true,
+//     },
+//     size: {
+//       quantity: {
+//         type: Number,
+//         required: true,
+//       },
+//     },
+//   }],
+//   },
+//   { collection: "groupedSkus" }
+// );
+
+// const groupedSkus = mongoose.model("groupedSkus", SkusSchema);
+
+module.exports = {
+  Product,
+  groupFeatures,
+  groupedStyles
+
+};
+
+//   skus: {
+//     size: {
+//       quantity: {
+//         type: Number,
+//         required: true
+//       },
+//       size: {
+//         type: String,
+//         required: true
+//       }
+//     }
+//   }
+// }]

@@ -25,7 +25,7 @@ app.get('/products/:product_id', (req, res) => {
 
 //gets all styles of the product with this ID
 app.get('/products/:product_id/styles', (req, res) => {
-  routes.getProductStyles(req.productId, (data)=>{
+  routes.getProductStyles(req.params, (data)=>{
     res.send(data)
   })
 })
