@@ -18,7 +18,7 @@ app.get('/products', (req, res) => {
     res.status(200).send(response.data)
     })
     .catch((error) => {
-      console.error('ERROR IN SERVER GET')
+      console.error(error)
       res.sendStatus(400)
     })
 })

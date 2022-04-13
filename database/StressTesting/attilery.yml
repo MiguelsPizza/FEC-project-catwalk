@@ -1,0 +1,13 @@
+config:
+  target: "http://localhost:5500"
+  phases:
+    - duration: 240
+      arrivalRate: 20
+      rampTo: 1000
+      name: "Ramping up"
+
+scenarios:
+  - name: "Retrieve data"
+    flow:
+      - get:
+          url: "/products/{{$randomNumber(1,10000)}}/styles"

@@ -9,6 +9,7 @@ app.use(express.static('public'));
 app.use(express.json());
 
 app.get('/products', (req, res) => {
+  console.log(req)
   routes.getProducts(req, (data)=>{
     res.send(data)
   })

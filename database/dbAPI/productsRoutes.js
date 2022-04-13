@@ -42,11 +42,18 @@ const getProductStyles = (req, cb) => {
   const id = Number(req.product_id);
   Schemas.groupedStyles.findById(id, (err, styleData) => {
     if (err) throw err;
+    if(!styleData){
+      cb({
+        product_id: "" + id,
+        results: results,
+      })
+      return
+    }
     styleData.results.sort((a, b) => {
       return a.style_id - b.style_id;
     });
     for (const style of styleData.results) {
-      console.log('style', style)
+
       const skusObj = {};
       if (style.skus.length > 1) {
 

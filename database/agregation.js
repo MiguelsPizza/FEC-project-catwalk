@@ -2,7 +2,8 @@ db = db.getSiblingDB("SDC");
 db.getCollectionNames();
 
 db.stylesAndSkusAndPhotos.aggregate(
-  [
+  [   { $limit : 10 },
+
 
     {
       $group: {
@@ -20,15 +21,15 @@ db.stylesAndSkusAndPhotos.aggregate(
         },
       },
     },
-    { $sort: { _id: 1 } },
-    {
-      $merge: {
-        into: "Combined_Styles",
-        on: "_id",
-        whenMatched: "replace",
-        whenNotMatched: "insert"
-      }
-      }
+    { $sort: { _id: 1 } }
+    // {
+    //   $merge: {
+    //     into: "Combined_Styles",
+    //     on: "_id",
+    //     whenMatched: "replace",
+    //     whenNotMatched: "insert"
+    //   }
+    //   }
   ],
   { allowDiskUse: true }
 );
